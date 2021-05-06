@@ -9,7 +9,15 @@ pipeline {
                 sh "docker build . -t ldhillon/nodeapp:${DOCKER_TAG}"
             }
         }
-    }
+        stage('DockerHub Push'){
+            steps{
+                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+                    sh "docker login -u ldhillon -p ${dockerHubPwd}"
+                    sh "docker push ldhillon/nodeapp:${DOCKER_TAG}"
+                }
+            }
+        }
+     }
 }
 
 def getDockerTag(){
