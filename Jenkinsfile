@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'kubepod' }
     environment{
         DOCKER_TAG = getDockerTag()
     }
