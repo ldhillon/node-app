@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage('Build Docker Image'){
             steps{
-                sh "docker build . -t ldhillon@nodeapp:${DOCKER_TAG}"
+                sh "docker build . -t ldhillon/nodeapp:${DOCKER_TAG}"
             }
         }
     }
