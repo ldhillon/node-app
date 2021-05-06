@@ -22,7 +22,7 @@ pipeline {
                  sh "chmod +x changeTag.sh"
                  sh "./changeTag.sh ${DOCKER_TAG}"
                  script {
-                     kubernetesDeploy(configs: "node-app-pod.yml, kubeconfigId: "mykubeconfig")
+                     kubernetesDeploy(configs: "node-app-pod.yml", kubeconfigId: "mykubeconfig")
                  }
              }
         }
