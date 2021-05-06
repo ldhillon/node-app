@@ -17,6 +17,15 @@ pipeline {
                 }
             }
         }
+        stage('Deploy App') {
+             steps {
+                 sh "chmod +x changeTag.sh"
+                 sh "./changeTag.sh ${DOCKER_TAG}"
+                 script {
+                     kubernetesDeploy(configs: "node-app-pod.yml" "services.yml", kubeconfigId: "mykubeconfig")
+                 }
+             }
+        }
      }
 }
 
