@@ -22,7 +22,6 @@ pipeline {
                  sh "chmod +x changeTag.sh"
                  sh "./changeTag.sh ${DOCKER_TAG}"
                  sshagent(['docker-jenkins-pvt-key']) {
-                    sh "ssh -o StrictHostKeyChecking=no ldhillon@mastertools.lsd.com ${dockerRun}"
                     sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ldhillon@mastertools.lsd.com:/home/ldhillon/jenkinsStage/"
                      script{
                          try{
