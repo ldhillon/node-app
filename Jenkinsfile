@@ -25,9 +25,9 @@ pipeline {
                     sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ldhillon@mastertools.lsd.com:/home/ldhillon/jenkinsStage/"
                      script{
                          try{
-                            sh "ssh ldhillon@mastertools.lsd.com kubectl apply -f ./jenkinsStage/node-app-pod.yml -f ./jenkinsStage/services.yml"
+                            sh "ssh ldhillon@mastertools.lsd.com kubectl apply -f ./jenkinsStage"
                          }catch(error){
-                             sh "ssh ldhillon@mastertools.lsd.com kubectl create -f ./jenkinsStage/node-app-pod.yml -f ./jenkinsStage/services.yml"
+                             sh "ssh ldhillon@mastertools.lsd.com kubectl create -f ./jenkinsStage"
                          }
                      }
                  }
