@@ -17,12 +17,20 @@ pipeline {
                 }
             }
         }
-        stage('Deploy App') {
+        stage('Deploy App to k8s') {
              steps {
                  sh "chmod +x changeTag.sh"
                  sh "./changeTag.sh ${DOCKER_TAG}"
-                 script {
-                     kubernetesDeploy(configs: "node-app-pod.yml", kubeconfigId: "mykubeconfig")
+                 sshagent(['docker-jenkins-pvt-key']) {
+                    sh "ssh -o StrictHostKeyChecking=no ldhillon@mastertools.lsd.com ${dockerRun}"
+                    sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ldhillon@mastertools.lsd.com:/home/ldhillon/jenkinsStage/"
+                     script{
+                         try{
+                            sh "ssh ldhillon@mastertools.lsd.com kubectl apply -f ."
+                         }catch(error){
+                             sh "ssh ldhillon@mastertools.lsd.com kubectl create -f ."
+                         }
+                     }
                  }
              }
         }
